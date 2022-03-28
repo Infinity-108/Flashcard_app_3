@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 if (allFlashcards.size() == 0)
                     return;
 
-                currentCardDisplayedIndex +=1;
+                currentCardDisplayedIndex ++;
 
                 if(currentCardDisplayedIndex >= allFlashcards.size()) {
 
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 allFlashcards = flashcardDatabase.getAllCards();
-                Flashcard flashcard = allFlashcards.get(currentCardDisplayedIndex);
+                Flashcard flashcard = allFlashcards.get(getRandomNumber(0,allFlashcards.size()-1));
 
 
 
@@ -68,6 +69,38 @@ public class MainActivity extends AppCompatActivity {
                 Answer.setVisibility(View.INVISIBLE);
                 Question.setVisibility(View.VISIBLE);
 
+
+            }
+        });
+
+        findViewById(R.id.trash_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //deleting using delete method in the flashcard.database
+                flashcardDatabase.deleteCard(Question.getText().toString());
+
+                //updating the list
+                allFlashcards = flashcardDatabase.getAllCards();
+
+                if(currentCardDisplayedIndex ==0 && allFlashcards.size()==0){
+                    String prompt = "ADD A CARD";
+                    Question.setText(prompt);
+
+                }
+                else {
+                     if (currentCardDisplayedIndex == 0) {
+                            currentCardDisplayedIndex = allFlashcards.size();
+                        }
+
+                        currentCardDisplayedIndex--;
+
+
+                        Flashcard flashcard = allFlashcards.get(currentCardDisplayedIndex);
+
+
+                        Answer.setText(flashcard.getAnswer());
+                        Question.setText(flashcard.getQuestion());
+                }
 
             }
         });
@@ -119,6 +152,11 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public int getRandomNumber(int minNumber, int maxNumber) {
+        Random rand = new Random();
+        return rand.nextInt((maxNumber - minNumber) + 1) + minNumber;
     }
     //declaring the variable outside of a method to allow access in all methods
     FlashcardDatabase flashcardDatabase;
