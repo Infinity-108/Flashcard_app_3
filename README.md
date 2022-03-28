@@ -5,7 +5,6 @@
 `This app builds off of the former version created in lab 2. It has additional features such as saving previously created flashcards, allowing deletion and keeping track of all flashcards created.
 
 ### App Walk-though
-`TODO://` Add the URL to your animated app walk-though `gif` in the image tag below. Make sure the gif actually renders and animates when viewing this README. (☝️ Remove this paragraph after after adding gif)
 
 <img src="https://github.com/Infinity-108/Flashcard_app_3/blob/main/lab_03.gif" width=200><br>
 
